@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shop/data/dummy_products.dart';
 import 'package:shop/models/product.dart';
 
 class ProductDetailPage extends StatelessWidget {
@@ -7,8 +6,9 @@ class ProductDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final Product product = ModalRoute.of(context)!.settings.arguments as Product;
-    Product product = dummyProducts[0];
+    final Product product = ModalRoute.of(context)!.settings.arguments as Product;
+
+    print(product.title);
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(

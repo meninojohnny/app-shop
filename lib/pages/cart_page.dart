@@ -4,8 +4,16 @@ import 'package:shop/components/cart_item.dart';
 import 'package:shop/models/cart.dart';
 import 'package:shop/models/order_list.dart';
 
-class CartPage extends StatelessWidget {
-  const CartPage({super.key});
+class CartPage extends StatefulWidget {
+
+  CartPage({super.key});
+
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +46,19 @@ class CartPage extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  TextButton(
-                    onPressed: () {
-                      Provider.of<OrderList>(context, listen: false).addOrder(cart);
-                      cart.clear();     
+                  isLoading ? const CircularProgressIndicator() : TextButton(
+                    onPressed: cart.items.isEmpty ? null : () {
+                      try {
+                        setState(() {isLoading = !isLoading;});
+                        Provider.of<OrderList>(context, listen: false).addOrder(cart).then((value) {
+                          cart.clear(); 
+                          setState(() {isLoading = !isLoading;});
+                        });
+                      } catch(e) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erro ao adicionar produto')));
+                      }
+                      
+                      
                     }, 
                     child: const Text('COMPRAR'),
                   ),

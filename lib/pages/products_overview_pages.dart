@@ -20,6 +20,20 @@ class ProductsOverviewPage extends StatefulWidget {
 }
 
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
+  bool isLoading = true;
+
+  Future<void> _refreshProducts(BuildContext context) {
+    return Provider.of<ProductList>(context, listen: false).loadProducts();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ProductList>(context, listen: false).loadProducts().then((value) {
+      setState(() {isLoading = false;});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final ProductList provider = Provider.of<ProductList>(context);
@@ -59,9 +73,14 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           )
         ],
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(10.0),
-        child: ProductGrid(),
+      body: RefreshIndicator(
+        onRefresh:() => _refreshProducts(context),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: isLoading 
+          ? const Center(child: CircularProgressIndicator()) 
+          : const ProductGrid(),
+        ),
       ),
     );
   }
