@@ -37,6 +37,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   @override
   Widget build(BuildContext context) {
     final ProductList provider = Provider.of<ProductList>(context);
+    // print(provider.items.length);
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       drawer: const AppDrawer(),

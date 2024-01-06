@@ -50,7 +50,7 @@ class _ProductsPageState extends State<ProductsPage> {
       : Padding(
         padding: const EdgeInsets.all(10),
         child: ListView.builder(
-          itemCount: products.itemsCount,
+          itemCount: products.items.length,
           itemBuilder: (_, index) {
             return Column(
               children: [

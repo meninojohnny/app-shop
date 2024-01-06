@@ -68,7 +68,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
     try {
       await Provider.of<ProductList>(context, listen: false).saveProduct(_formData);
-      Navigator.of(context).pop();
+      Navigator.pop(context);
     } catch(e) {
       await showDialog(
         context: context, 

@@ -11,6 +11,7 @@ class ProductGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProductList>(context);
     final List<Product> loadedProducts = provider.items;
+    // print(loadedProducts.length);
 
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
