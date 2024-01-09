@@ -5,7 +5,6 @@ import 'package:shop/models/cart.dart';
 import 'package:shop/models/order_list.dart';
 import 'package:shop/models/product_list.dart';
 import 'package:shop/pages/auth_or_home_page.dart';
-import 'package:shop/pages/auth_page.dart';
 import 'package:shop/pages/cart_page.dart';
 import 'package:shop/pages/orders_page.dart';
 import 'package:shop/pages/product_detail_page.dart';
@@ -27,17 +26,19 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => Auth()),
         ChangeNotifierProxyProvider<Auth, ProductList>(
-          create: (_) => ProductList('', []),
+          create: (_) => ProductList(),
           update: (context, auth, previus) => ProductList(
             auth.token ?? '', 
             previus?.items ?? [],
+            auth.userId ?? ''
           ),
         ),
         ChangeNotifierProxyProvider<Auth, OrderList>(
-          create: (_) => OrderList('', []),
+          create: (_) => OrderList(),
           update: (ctx, auth, previus) => OrderList(
             auth.token ?? '', 
-            previus!.items ?? []
+            previus!.items ?? [],
+            auth.userId ?? ''
           ),
         ),
         ChangeNotifierProvider(create: (_) => Cart()),
